@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+
+  myapp:
+    image: mydomain/myapp:v0.0.1-a
+    container_name: myapp
+    ports:
+      - "8080:8080"
+    networks:
+      - my_network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: always
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      -  /etc/letsencrypt:/etc/letsencrypt
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - my_network
+
+networks:
+  my_network:
